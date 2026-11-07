@@ -1,0 +1,13 @@
+name: fetch-fabricnet
+on: workflow_dispatch
+jobs:
+  dl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install gdown
+      - run: gdown --folder --remaining-ok "https://drive.google.com/drive/folders/1Kr7hek1hZCKYwKa7nbwO8Rbmt5096aNg" -O fabricnet_raw
+      - run: zip -r fabricnet.zip fabricnet_raw
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: fabricnet.zip
